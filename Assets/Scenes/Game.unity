@@ -359,6 +359,7 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects: []
   _gameWindowPrefab: {fileID: 6188326247936717760, guid: 88ad09b735ab4c2478ce874dd259c398, type: 3}
+  _recognitionData: {fileID: 11400000, guid: 3d073d9fdb4a59a468f2e7893f384e5d, type: 2}
   _inputActionAsset: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
 --- !u!4 &890216250
 Transform:

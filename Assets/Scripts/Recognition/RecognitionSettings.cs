@@ -1,0 +1,18 @@
+﻿using UnityEngine;
+
+namespace Recognition
+{
+    [CreateAssetMenu(menuName = "Recognition/" + nameof(RecognitionSettings), 
+        fileName = nameof(RecognitionSettings))]
+    public class RecognitionSettings : ScriptableObject
+    {
+        [field: Range(0f, 1f), SerializeField]
+        public float RecognitionThreshold { get; private set; } = 0.7f;
+        
+        [field: Min(0f), SerializeField]
+        public float SampleRateSeconds { get; private set; } = 0.05f;
+        
+        [field: Min(1), SerializeField]
+        public int ZernikeOrder { get; private set; } = 4;
+    }
+}
