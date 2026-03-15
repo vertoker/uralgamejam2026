@@ -13,9 +13,6 @@ namespace Recognition
         [field: Range(0f, 1f), SerializeField]
         public float ZernikeWeight { get; private set; } = 0.7f;
         
-        [field: Min(0f), SerializeField]
-        public float SampleRateSeconds { get; private set; } = 0.05f;
-        
         [field: Min(1), SerializeField]
         public int ZernikeOrder { get; private set; } = 4;
         

@@ -13,9 +13,9 @@ namespace Recognition
             _settings = settings;
         }
 
-        public void Recognize(IReadOnlyList<Vector2> points)
+        public SymbolFeaturesScriptable Recognize(IReadOnlyList<Vector2> points)
         {
-            if (points.Count == 0) return;
+            if (points.Count == 0) return null;
             Debug.Log($"<b>Recognizing {points.Count} points</b>");
             
             var newPoints = new List<Vector2>(points);
@@ -56,13 +56,13 @@ namespace Recognition
 
             if (bestSimilarity >= _settings.RecognitionThreshold)
             {
-                Debug.Log($"<color=green>RECOGNIZED: {bestMatch.name} (similarity: {bestSimilarity:F4})</color>");
                 LogFeatures(bestMatch.Data);
+                Debug.Log($"<color=green>Recognized: {bestMatch.name} (similarity: {bestSimilarity:F4})</color>");
+                return bestMatch;
             }
-            else
-            {
-                Debug.Log($"<color=yellow>Not recognized (best: {bestSimilarity:F4})</color>");
-            }
+            
+            Debug.Log($"<color=yellow>Not recognized (best: {bestSimilarity:F4})</color>");
+            return null;
         }
 
         /// <summary>

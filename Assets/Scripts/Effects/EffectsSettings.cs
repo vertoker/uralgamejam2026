@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.VFX;
 
 namespace Effects
 {
@@ -6,6 +7,10 @@ namespace Effects
         fileName = nameof(EffectsSettings))]
     public class EffectsSettings : ScriptableObject
     {
+        [field: Header("VFX")]
+        [field: SerializeField] public VisualEffect PrefabLineEffect { get; private set; }
+        
+        [field: Header("LineRenderer")]
         [field: SerializeField] public LineRenderer PrefabRenderer { get; private set; }
     }
 }

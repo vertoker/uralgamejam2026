@@ -360,9 +360,10 @@ MonoBehaviour:
   autoInjectGameObjects: []
   _camera: {fileID: 1755581297}
   _gameWindowPrefab: {fileID: 6188326247936717760, guid: 88ad09b735ab4c2478ce874dd259c398, type: 3}
+  _inputActionAsset: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   _effectsSettings: {fileID: 11400000, guid: 0982d75bd8e18184682df384d28cb4da, type: 2}
   _recognitionSettings: {fileID: 11400000, guid: c15817ad16fb54d4bb10e537cc94047d, type: 2}
-  _inputActionAsset: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  _spellsSettings: {fileID: 11400000, guid: 7311795aec70c3349aa6df9a6f693ddc, type: 2}
 --- !u!4 &890216250
 Transform:
   m_ObjectHideFlags: 0

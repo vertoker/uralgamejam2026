@@ -43,6 +43,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Tip",
+                    "type": "Button",
+                    "id": "633c4961-7dc3-49e3-bf53-0193a6a06159",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "CursorPosition",
                     "type": "Value",
                     "id": "c0ddebfe-dd2d-421f-8e9b-7ae1bb0d3f74",
@@ -388,6 +397,17 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "Cancel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "15fb4cb5-6365-4c20-9f71-ded1705c1512",
+                    "path": "<Keyboard>/ctrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Tip",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

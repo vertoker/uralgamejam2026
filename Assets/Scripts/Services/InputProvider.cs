@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Extensions;
+using Runes;
 using UniRx;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -15,13 +16,12 @@ namespace Services
         public ReactiveProperty<Vector2> CursorPosition { get; } = new(Vector2.zero);
         
         public ReactiveProperty<bool> Cancel { get; } = new(false);
+        public ReactiveProperty<bool> Tip { get; } = new(false);
         public ReactiveProperty<bool> MagicMode { get; } = new(false);
         public ReactiveProperty<bool> CursorActive { get; } = new(false);
 
-        private readonly ReactiveProperty<bool>[] _modifiers = new ReactiveProperty<bool>[ModifiersCount];
+        private readonly ReactiveProperty<bool>[] _modifiers = new ReactiveProperty<bool>[RuneStatic.Count];
         public IReadOnlyList<IReadOnlyReactiveProperty<bool>> Modifiers => _modifiers;
-        
-        public const int ModifiersCount = 6;
         
         private readonly CursorService _cursorService;
         
@@ -33,17 +33,18 @@ namespace Services
         private InputAction _cursorPosition;
         
         private InputAction _cancel;
+        private InputAction _tip;
         private InputAction _magicMode;
         private InputAction _cursorActive;
         
-        private readonly InputAction[] _modifierActions = new InputAction[ModifiersCount];
+        private readonly InputAction[] _modifierActions = new InputAction[RuneStatic.Count];
 
         private readonly CompositeDisposable _disposables = new();
 
         public InputProvider(CursorService cursorService, InputActionAsset inputActionAsset)
         {
             _cursorService = cursorService;
-            for (var i = 0; i < ModifiersCount; i++)
+            for (var i = 0; i < RuneStatic.Count; i++)
                 _modifiers[i] = new ReactiveProperty<bool>(false);
             
             FindActions(inputActionAsset);
@@ -69,10 +70,11 @@ namespace Services
             _cursorPosition = _playerMap.FindAction("CursorPosition");
             
             _cancel = _playerMap.FindAction("Cancel");
+            _tip = _playerMap.FindAction("Tip");
             _magicMode = _playerMap.FindAction("MagicMode");
             _cursorActive = _playerMap.FindAction("CursorActive");
 
-            for (var i = 0; i < ModifiersCount; i++)
+            for (var i = 0; i < RuneStatic.Count; i++)
                 _modifierActions[i] = _playerMap.FindAction($"Modifier {i+1}");
         }
 
@@ -98,12 +100,14 @@ namespace Services
             
             _cancel.SubscribePerformed(CancelOnPerformed).AddTo(_disposables);
             _cancel.SubscribeCanceled(CancelOnCancelled).AddTo(_disposables);
+            _tip.SubscribePerformed(TipOnPerformed).AddTo(_disposables);
+            _tip.SubscribeCanceled(TipOnCancelled).AddTo(_disposables);
             _magicMode.SubscribePerformed(MagicModeOnPerformed).AddTo(_disposables);
             _magicMode.SubscribeCanceled(MagicModeOnCancelled).AddTo(_disposables);
             _cursorActive.SubscribePerformed(CursorActiveOnPerformed).AddTo(_disposables);
             _cursorActive.SubscribeCanceled(CursorActiveOnCancelled).AddTo(_disposables);
 
-            for (var i = 0; i < ModifiersCount; i++)
+            for (var i = 0; i < RuneStatic.Count; i++)
             {
                 var iCached = i;
                 _modifierActions[i].SubscribePerformed(ctx => ModifiersOnPerformed(ctx, iCached)).AddTo(_disposables);
@@ -124,6 +128,8 @@ namespace Services
         
         private void CancelOnPerformed(InputAction.CallbackContext ctx) => Cancel.Value = true;
         private void CancelOnCancelled(InputAction.CallbackContext ctx) => Cancel.Value = false;
+        private void TipOnPerformed(InputAction.CallbackContext ctx) => Tip.Value = true;
+        private void TipOnCancelled(InputAction.CallbackContext ctx) => Tip.Value = false;
         private void MagicModeOnPerformed(InputAction.CallbackContext ctx) => MagicMode.Value = true;
         private void MagicModeOnCancelled(InputAction.CallbackContext ctx) => MagicMode.Value = false;
         private void CursorActiveOnPerformed(InputAction.CallbackContext ctx) => CursorActive.Value = true;

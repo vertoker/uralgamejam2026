@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using Object = UnityEngine.Object;
 
 namespace Effects
@@ -9,10 +8,11 @@ namespace Effects
         private readonly LineRenderer _renderer;
         private int _counter;
         
-        public LineDrawer(LineRenderer prefabRenderer)
+        public LineDrawer(LineRenderer prefabRenderer, Color color)
         {
             _renderer = Object.Instantiate(prefabRenderer);
             _counter = _renderer.positionCount = 0;
+            _renderer.startColor = _renderer.endColor = color;
         }
 
         public void AddPosition(Vector3 position)

@@ -1,4 +1,6 @@
-﻿namespace Effects
+﻿using UnityEngine;
+
+namespace Effects
 {
     public class LineDrawerService
     {
@@ -9,9 +11,9 @@
             _effectsSettings = effectsSettings;
         }
 
-        public LineDrawer Create()
+        public LineDrawer Create(Color color)
         {
-            var lineDrawer = new LineDrawer(_effectsSettings.PrefabRenderer);
+            var lineDrawer = new LineDrawer(_effectsSettings.PrefabRenderer, color);
             return lineDrawer;
         }
         public void Return(LineDrawer lineDrawer)

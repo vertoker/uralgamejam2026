@@ -2,25 +2,35 @@
 using System.Collections.Generic;
 using Effects;
 using Recognition;
+using Runes;
 using UniRx;
 using UnityEngine;
 using VContainer.Unity;
 
 namespace Services
 {
-    public class SymbolDrawerService : IInitializable, IDisposable
+    public class SymbolService : IInitializable, IDisposable
     {
         private readonly Camera _camera;
         private readonly InputProvider _inputProvider;
+        private readonly RunesProvider _runesProvider;
+        private readonly RuneColorMixer _colorMixer;
         private readonly ZernikeRecognizer _zernikeRecognizer;
         private readonly LineDrawerService _lineDrawerService;
+        
+        private readonly Subject<SymbolFeaturesScriptable> _onSymbolDraw = new();
+        public IObservable<SymbolFeaturesScriptable> OnSymbolDraw => _onSymbolDraw;
+        
         private readonly CompositeDisposable _disposables = new();
 
-        public SymbolDrawerService(Camera camera, InputProvider inputProvider,
+        public SymbolService(Camera camera, InputProvider inputProvider, 
+            RunesProvider runesProvider, RuneColorMixer colorMixer,
             ZernikeRecognizer zernikeRecognizer, LineDrawerService lineDrawerService)
         {
             _camera = camera;
             _inputProvider = inputProvider;
+            _runesProvider = runesProvider;
+            _colorMixer = colorMixer;
             _zernikeRecognizer = zernikeRecognizer;
             _lineDrawerService = lineDrawerService;
         }
@@ -43,12 +53,14 @@ namespace Services
             if (active)
             {
                 _pointsCache.Clear();
-                _testLineDrawer = _lineDrawerService.Create();
+                var color = _colorMixer.GetColor(_runesProvider.RuneGroup.Value);
+                _testLineDrawer = _lineDrawerService.Create(color);
             }
             else
             {
-                _zernikeRecognizer.Recognize(_pointsCache);
                 _lineDrawerService.Return(_testLineDrawer, 3f);
+                var symbolFeatures = _zernikeRecognizer.Recognize(_pointsCache);
+                _onSymbolDraw.OnNext(symbolFeatures);
             }
         }
         private void OnCursorUpdate(Vector2 position)
