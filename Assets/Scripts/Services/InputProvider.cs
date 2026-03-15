@@ -43,6 +43,9 @@ namespace Services
         public InputProvider(CursorService cursorService, InputActionAsset inputActionAsset)
         {
             _cursorService = cursorService;
+            for (var i = 0; i < ModifiersCount; i++)
+                _modifiers[i] = new ReactiveProperty<bool>(false);
+            
             FindActions(inputActionAsset);
         }
         public void Initialize()

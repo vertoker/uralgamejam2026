@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6b02f08c6364bf08cfdf0bdc925dc00, type: 3}
+  m_Name: Cube 1
+  m_EditorClassIdentifier: Assembly-CSharp::Recognition.SymbolFeaturesScriptable
+  <Data>k__BackingField:
+    <ZernikeMoments>k__BackingField:
+    - 0.049668204
+    - 0.009120815
+    - 0.009120815
+    - 0.009888979
+    - 0.02293291
+    - 0.009888979
+    - 0.030403353
+    - 0.08388982
+    - 0.08388982
+    - 0.030403353
+    - 1
+    - 0.11657922
+    - 0.072201006
+    - 0.11657922
+    - 1
+    <AngularHistogram>k__BackingField:
+    - 0.078125
+    - 0.109375
+    - 0.078125
+    - 0.078125
+    - 0.125
+    - 0.078125
+    - 0.0625
+    - 0.09375
+    - 0.0625
+    - 0.046875
+    - 0.109375
+    - 0.078125

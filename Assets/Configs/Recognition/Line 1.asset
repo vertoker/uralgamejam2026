@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6b02f08c6364bf08cfdf0bdc925dc00, type: 3}
+  m_Name: Line 1
+  m_EditorClassIdentifier: Assembly-CSharp::Recognition.SymbolFeaturesScriptable
+  <Data>k__BackingField:
+    <ZernikeMoments>k__BackingField:
+    - 0.047036607
+    - 0.004822395
+    - 0.004822395
+    - 0.08813707
+    - 0.05289956
+    - 0.08813707
+    - 0.05558482
+    - 0.03570014
+    - 0.03570014
+    - 0.05558482
+    - 1
+    - 0.56084174
+    - 0.044636425
+    - 0.56084174
+    - 1
+    <AngularHistogram>k__BackingField:
+    - 0.29508197
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0.21311475
+    - 0.26229507
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0.22950819

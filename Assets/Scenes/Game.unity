@@ -361,7 +361,7 @@ MonoBehaviour:
   _camera: {fileID: 1755581297}
   _gameWindowPrefab: {fileID: 6188326247936717760, guid: 88ad09b735ab4c2478ce874dd259c398, type: 3}
   _effectsSettings: {fileID: 11400000, guid: 0982d75bd8e18184682df384d28cb4da, type: 2}
-  _recognitionData: {fileID: 11400000, guid: 3d073d9fdb4a59a468f2e7893f384e5d, type: 2}
+  _recognitionSettings: {fileID: 11400000, guid: c15817ad16fb54d4bb10e537cc94047d, type: 2}
   _inputActionAsset: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
 --- !u!4 &890216250
 Transform:

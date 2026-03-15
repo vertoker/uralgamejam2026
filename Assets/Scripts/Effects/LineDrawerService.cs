@@ -9,9 +9,9 @@
             _effectsSettings = effectsSettings;
         }
 
-        public LineDrawer Create(int maxCapacity)
+        public LineDrawer Create()
         {
-            var lineDrawer = new LineDrawer(maxCapacity, _effectsSettings.PrefabRenderer);
+            var lineDrawer = new LineDrawer(_effectsSettings.PrefabRenderer);
             return lineDrawer;
         }
         public void Return(LineDrawer lineDrawer)

@@ -12,7 +12,7 @@ public class GameScope : LifetimeScope
     [SerializeField] private Camera _camera;
     [SerializeField] private GameWindow _gameWindowPrefab;
     [SerializeField] private EffectsSettings _effectsSettings;
-    [SerializeField] private RecognitionData _recognitionData;
+    [SerializeField] private RecognitionSettings _recognitionSettings;
     [SerializeField] private InputActionAsset _inputActionAsset;
     
     protected override void Configure(IContainerBuilder builder)
@@ -22,7 +22,7 @@ public class GameScope : LifetimeScope
         builder.RegisterInstance(_camera);
         builder.RegisterInstance(gameWindow);
         builder.RegisterInstance(_effectsSettings);
-        builder.RegisterInstance(_recognitionData);
+        builder.RegisterInstance(_recognitionSettings);
         builder.RegisterInstance(_inputActionAsset);
         
         // Input

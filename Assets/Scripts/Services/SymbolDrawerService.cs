@@ -43,7 +43,7 @@ namespace Services
             if (active)
             {
                 _pointsCache.Clear();
-                _testLineDrawer = _lineDrawerService.Create(300);
+                _testLineDrawer = _lineDrawerService.Create();
             }
             else
             {
@@ -55,7 +55,7 @@ namespace Services
         {
             if (_inputProvider.CursorActive.Value)
             {
-                Debug.Log($"Mouse position: {position}");
+                // Debug.Log($"Mouse position: {position}");
                 _pointsCache.Add(position);
                 var ray = _camera.ScreenPointToRay(position);
                 var point = ray.GetPoint(3f);
