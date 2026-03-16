@@ -57,11 +57,11 @@ namespace Recognition
             if (bestSimilarity >= _settings.RecognitionThreshold)
             {
                 LogFeatures(bestMatch.Data);
-                Debug.Log($"<color=green>Recognized: {bestMatch.name} (similarity: {bestSimilarity:F4})</color>");
+                Debug.Log($"<color=green>Recognized</color>: <color=green>{bestMatch.name}</color> (similarity: <b>{bestSimilarity:F4}</b>)");
                 return bestMatch;
             }
             
-            Debug.Log($"<color=yellow>Not recognized (best: {bestSimilarity:F4})</color>");
+            Debug.Log($"<color=yellow>Not recognized</color> (best: <b>{bestSimilarity:F4}</b>)");
             return null;
         }
 

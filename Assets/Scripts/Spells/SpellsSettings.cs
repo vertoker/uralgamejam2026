@@ -8,7 +8,7 @@ namespace Spells
         fileName = nameof(SpellsSettings))]
     public class SpellsSettings : ScriptableObject
     {
-        [field: SerializeField] public float ActivateTimeIfHasChoice { get; private set; } = 0.5f;
+        [field: SerializeField] public float ActivateTime { get; private set; } = 1f;
         
         [SerializeField] private SpellScriptable[] _spells = Array.Empty<SpellScriptable>();
         public IReadOnlyList<SpellScriptable> Spells => _spells;

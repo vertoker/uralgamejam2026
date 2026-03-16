@@ -18,10 +18,13 @@ namespace Services
         private readonly ZernikeRecognizer _zernikeRecognizer;
         private readonly LineDrawerService _lineDrawerService;
         
-        private readonly Subject<SymbolFeaturesScriptable> _onSymbolDraw = new();
-        public IObservable<SymbolFeaturesScriptable> OnSymbolDraw => _onSymbolDraw;
-        
         private readonly CompositeDisposable _disposables = new();
+        
+        private readonly Subject<Unit> _onStartDraw = new();
+        private readonly Subject<SymbolFeaturesScriptable> _onDraw = new();
+        
+        public IObservable<Unit> OnStartDraw => _onStartDraw;
+        public IObservable<SymbolFeaturesScriptable> OnDraw => _onDraw;
 
         public SymbolService(Camera camera, InputProvider inputProvider, 
             RunesProvider runesProvider, RuneColorMixer colorMixer,
@@ -55,12 +58,17 @@ namespace Services
                 _pointsCache.Clear();
                 var color = _colorMixer.GetColor(_runesProvider.RuneGroup.Value);
                 _testLineDrawer = _lineDrawerService.Create(color);
+                _onStartDraw.OnNext(Unit.Default);
             }
             else
             {
                 _lineDrawerService.Return(_testLineDrawer, 3f);
-                var symbolFeatures = _zernikeRecognizer.Recognize(_pointsCache);
-                _onSymbolDraw.OnNext(symbolFeatures);
+                
+                if (_pointsCache.Count != 0)
+                {
+                    var symbolFeatures = _zernikeRecognizer.Recognize(_pointsCache);
+                    _onDraw.OnNext(symbolFeatures);
+                }
             }
         }
         private void OnCursorUpdate(Vector2 position)
@@ -68,6 +76,8 @@ namespace Services
             if (_inputProvider.CursorActive.Value)
             {
                 // Debug.Log($"Mouse position: {position}");
+                if (_pointsCache.Count > 0 && _pointsCache[^1] == position) return;
+                
                 _pointsCache.Add(position);
                 var ray = _camera.ScreenPointToRay(position);
                 var point = ray.GetPoint(3f);

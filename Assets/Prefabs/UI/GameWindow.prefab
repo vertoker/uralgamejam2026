@@ -273,17 +273,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: RuneIcon (6)
       objectReference: {fileID: 0}
-    - target: {fileID: 6951949643632060674, guid: 39e75541fce1be846b3bbadcd082923c, type: 3}
-      propertyPath: m_text
-      value: Y
-      objectReference: {fileID: 0}
     - target: {fileID: 8561503056848444305, guid: 39e75541fce1be846b3bbadcd082923c, type: 3}
       propertyPath: m_text
       value: "\u03B6"
       objectReference: {fileID: 0}
     - target: {fileID: 8561503056848444305, guid: 39e75541fce1be846b3bbadcd082923c, type: 3}
       propertyPath: m_fontSize
-      value: 71.6
+      value: 89.5
       objectReference: {fileID: 0}
     - target: {fileID: 9063452620960632701, guid: 39e75541fce1be846b3bbadcd082923c, type: 3}
       propertyPath: <RuneType>k__BackingField
@@ -391,17 +387,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: RuneIcon (5)
       objectReference: {fileID: 0}
-    - target: {fileID: 6951949643632060674, guid: 39e75541fce1be846b3bbadcd082923c, type: 3}
-      propertyPath: m_text
-      value: T
-      objectReference: {fileID: 0}
     - target: {fileID: 8561503056848444305, guid: 39e75541fce1be846b3bbadcd082923c, type: 3}
       propertyPath: m_text
       value: "\u03B5"
       objectReference: {fileID: 0}
     - target: {fileID: 8561503056848444305, guid: 39e75541fce1be846b3bbadcd082923c, type: 3}
       propertyPath: m_fontSize
-      value: 71.6
+      value: 89.5
       objectReference: {fileID: 0}
     - target: {fileID: 9063452620960632701, guid: 39e75541fce1be846b3bbadcd082923c, type: 3}
       propertyPath: <RuneType>k__BackingField
@@ -509,17 +501,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: RuneIcon (3)
       objectReference: {fileID: 0}
-    - target: {fileID: 6951949643632060674, guid: 39e75541fce1be846b3bbadcd082923c, type: 3}
-      propertyPath: m_text
-      value: E
-      objectReference: {fileID: 0}
     - target: {fileID: 8561503056848444305, guid: 39e75541fce1be846b3bbadcd082923c, type: 3}
       propertyPath: m_text
       value: "\u03B3"
       objectReference: {fileID: 0}
     - target: {fileID: 8561503056848444305, guid: 39e75541fce1be846b3bbadcd082923c, type: 3}
       propertyPath: m_fontSize
-      value: 71.6
+      value: 89.5
       objectReference: {fileID: 0}
     - target: {fileID: 9063452620960632701, guid: 39e75541fce1be846b3bbadcd082923c, type: 3}
       propertyPath: <RuneType>k__BackingField
@@ -627,17 +615,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: RuneIcon (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 6951949643632060674, guid: 39e75541fce1be846b3bbadcd082923c, type: 3}
-      propertyPath: m_text
-      value: Q
-      objectReference: {fileID: 0}
     - target: {fileID: 8561503056848444305, guid: 39e75541fce1be846b3bbadcd082923c, type: 3}
       propertyPath: m_text
       value: "\u03B1"
       objectReference: {fileID: 0}
     - target: {fileID: 8561503056848444305, guid: 39e75541fce1be846b3bbadcd082923c, type: 3}
       propertyPath: m_fontSize
-      value: 71.6
+      value: 89.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -741,17 +725,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: RuneIcon (4)
       objectReference: {fileID: 0}
-    - target: {fileID: 6951949643632060674, guid: 39e75541fce1be846b3bbadcd082923c, type: 3}
-      propertyPath: m_text
-      value: R
-      objectReference: {fileID: 0}
     - target: {fileID: 8561503056848444305, guid: 39e75541fce1be846b3bbadcd082923c, type: 3}
       propertyPath: m_text
       value: "\u03B4"
       objectReference: {fileID: 0}
     - target: {fileID: 8561503056848444305, guid: 39e75541fce1be846b3bbadcd082923c, type: 3}
       propertyPath: m_fontSize
-      value: 71.6
+      value: 89.5
       objectReference: {fileID: 0}
     - target: {fileID: 9063452620960632701, guid: 39e75541fce1be846b3bbadcd082923c, type: 3}
       propertyPath: <RuneType>k__BackingField
@@ -859,17 +839,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: RuneIcon (2)
       objectReference: {fileID: 0}
-    - target: {fileID: 6951949643632060674, guid: 39e75541fce1be846b3bbadcd082923c, type: 3}
-      propertyPath: m_text
-      value: W
-      objectReference: {fileID: 0}
     - target: {fileID: 8561503056848444305, guid: 39e75541fce1be846b3bbadcd082923c, type: 3}
       propertyPath: m_text
       value: "\u03B2"
       objectReference: {fileID: 0}
     - target: {fileID: 8561503056848444305, guid: 39e75541fce1be846b3bbadcd082923c, type: 3}
       propertyPath: m_fontSize
-      value: 71.6
+      value: 89.5
       objectReference: {fileID: 0}
     - target: {fileID: 9063452620960632701, guid: 39e75541fce1be846b3bbadcd082923c, type: 3}
       propertyPath: <RuneType>k__BackingField

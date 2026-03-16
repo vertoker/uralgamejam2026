@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using Recognition;
 using Spells;
 using UniRx;
+using UnityEngine;
 using VContainer.Unity;
 
 namespace Services
@@ -11,10 +14,9 @@ namespace Services
         private readonly SpellsSettings _settings;
         private readonly SymbolService _symbolService;
         private readonly RunesProvider _runesProvider;
-        
-        private readonly SpellContainer _spellContainer;
         private readonly SpellCounter _spellCounter;
 
+        private CancellationTokenSource _tokenSource = new();
         private readonly CompositeDisposable _disposables = new();
         
         public SpellService(SpellsSettings settings, SymbolService symbolService, RunesProvider runesProvider)
@@ -23,27 +25,96 @@ namespace Services
             _symbolService = symbolService;
             _runesProvider = runesProvider;
 
-            _spellContainer = new SpellContainer(_settings);
-            _spellCounter = new SpellCounter(_spellContainer);
+            var spellContainer = new SpellContainer();
+            spellContainer.Initialize(settings);
+            _spellCounter = new SpellCounter(spellContainer);
         }
-
         public void Initialize()
         {
-            _symbolService.OnSymbolDraw.Subscribe(OnSymbolDraw).AddTo(_disposables);
+            _symbolService.OnStartDraw.Subscribe(OnStartDraw).AddTo(_disposables);
+            _symbolService.OnDraw.Subscribe(OnDraw).AddTo(_disposables);
         }
         public void Dispose()
         {
             _disposables.Dispose();
         }
-        
-        private void OnSymbolDraw(SymbolFeaturesScriptable symbol)
+
+        private void OnStartDraw(Unit unit)
         {
-            if (!symbol) return;
+            Stop();
+        }
+        private void OnDraw(SymbolFeaturesScriptable symbol)
+        {
+            if (!symbol)
+            {
+                StartCancel();
+                return;
+            }
             
             var runeGroup = _runesProvider.RuneGroup.Value;
             var step = new SpellStep(symbol, runeGroup);
-            var spell = _spellCounter.Step(step);
-            // TODO спаунить spell
+
+            Debug.Log($"{BgnClrGrn}Step{EndClr}, " +
+                      $"symbol: {BgnClrGrn}{step.Symbol.name}{EndClr}, " +
+                      $"runes: ({BgnClrGrn}{step.RuneGroup}{EndClr})");
+            
+            if (_spellCounter.Active)
+                _spellCounter.Next(step);
+            else _spellCounter.Start(step);
+            
+            StartCast();
         }
+        
+        private void StartCancel()
+        {
+            Stop();
+            CancelAsync(_tokenSource.Token).Forget();
+        }
+        private void StartCast()
+        {
+            Stop();
+            CastAsync(_tokenSource.Token).Forget();
+        }
+        private void Stop()
+        {
+            _tokenSource.Cancel();
+            _tokenSource.Dispose();
+            _tokenSource = new CancellationTokenSource();
+        }
+
+        private async UniTask CancelAsync(CancellationToken token)
+        {
+            await UniTask.WaitForSeconds(_settings.ActivateTime);
+            if (token.IsCancellationRequested) return;
+            
+            Debug.Log($"{BgnClrYlw}Cancel{EndClr}, steps count: {_spellCounter.Steps.Count}");
+            
+            _spellCounter.Stop();
+        }
+        private async UniTask CastAsync(CancellationToken token)
+        {
+            await UniTask.WaitForSeconds(_settings.ActivateTime);
+            if (token.IsCancellationRequested) return;
+            
+            var spell = _spellCounter.GetSpell();
+            LogSpell(spell);
+
+            _spellCounter.Stop();
+        }
+
+        private static void LogSpell(SpellScriptable spell)
+        {
+            var spellName = spell ? $"{BgnBldClrGrn}{spell.name}{EndBldClr}" : $"{BgnBldClrYlw}None{EndBldClr}";
+            Debug.Log($"{BgnClrGrn}Cast{EndClr}, spell: {spellName}");
+        }
+
+        private const string BgnBld = "<b>";
+        private const string EndBld = "</b>";
+        private const string BgnClrGrn = "<color=green>";
+        private const string BgnClrYlw = "<color=yellow>";
+        private const string EndClr = "</color>";
+        private const string BgnBldClrGrn = "<color=green><b>";
+        private const string BgnBldClrYlw = "<color=yellow><b>";
+        private const string EndBldClr = "</b></color>";
     }
 }

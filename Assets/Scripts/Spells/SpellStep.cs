@@ -11,6 +11,10 @@ namespace Spells
         [field: SerializeField] public SymbolFeaturesScriptable Symbol { get; private set; }
         [field: SerializeField] public RuneGroup RuneGroup { get; private set; }
 
+        public bool IsValid => Symbol;
+        
+        public string GetName() => IsValid ? Symbol.name : "None";
+
         public SpellStep(SymbolFeaturesScriptable symbol, RuneGroup runeGroup)
         {
             Symbol = symbol;
