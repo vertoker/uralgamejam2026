@@ -1,18 +1,29 @@
-﻿using UniRx;
+﻿using System;
+using UI;
+using UniRx;
+using UnityEngine;
+using VContainer.Unity;
 
 namespace Services
 {
-    public class GameUIService
+    public class GameUIService : IInitializable, IDisposable
     {
         private readonly InputProvider _inputProvider;
+        private readonly CursorService _cursorService;
         private readonly GameModesService _gameModesService;
+        private readonly PauseWindow _pauseWindow;
 
+        private bool _isPlay = true;
+        
         private readonly CompositeDisposable _disposables = new();
         
-        public GameUIService(InputProvider inputProvider, GameModesService gameModesService)
+        public GameUIService(InputProvider inputProvider, CursorService cursorService,
+            GameModesService gameModesService, PauseWindow pauseWindow)
         {
             _inputProvider = inputProvider;
+            _cursorService = cursorService;
             _gameModesService = gameModesService;
+            _pauseWindow = pauseWindow;
         }
         public void Initialize()
         {
@@ -26,8 +37,20 @@ namespace Services
         private void OnCancel(bool value)
         {
             if (!value) return;
-            
-            // TODO open pause window
+            _isPlay = !_isPlay;
+
+            if (_isPlay)
+            {
+                _pauseWindow.gameObject.SetActive(false);
+                Time.timeScale = 1f;
+                _cursorService.SetNone();
+            }
+            else
+            {
+                _pauseWindow.gameObject.SetActive(true);
+                Time.timeScale = 0f;
+                _gameModesService.ForceUpdateMagicMode();
+            }
         }
     }
 }

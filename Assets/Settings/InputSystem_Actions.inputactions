@@ -402,6 +402,17 @@
                 },
                 {
                     "name": "",
+                    "id": "72ea027f-9b58-4e90-8835-cf5b8f37f7b2",
+                    "path": "<Keyboard>/backspace",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Cancel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "15fb4cb5-6365-4c20-9f71-ded1705c1512",
                     "path": "<Keyboard>/ctrl",
                     "interactions": "",

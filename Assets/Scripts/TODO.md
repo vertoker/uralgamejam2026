@@ -1,0 +1,4 @@
+﻿- add pause menu
+- fix bug - when change runeGroup - force reinit shapes
+- add validation for success/failed steps
+- create base menu

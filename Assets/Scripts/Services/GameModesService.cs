@@ -36,6 +36,10 @@ namespace Services
             if (!value) return;
             UpdateMagicMode(!_isMagicMode.Value);
         }
+        public void ForceUpdateMagicMode()
+        {
+            UpdateMagicMode(_isMagicMode.Value);
+        }
         private void UpdateMagicMode(bool value)
         {
             _cursorService.SetMode(value ? CursorLockMode.None : CursorLockMode.Locked);

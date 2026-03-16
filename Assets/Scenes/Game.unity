@@ -616,8 +616,9 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects: []
   _player: {fileID: 2119034595}
-  _gameWindowPrefab: {fileID: 6188326247936717760, guid: 88ad09b735ab4c2478ce874dd259c398, type: 3}
   _inputActionAsset: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  _gameWindowPrefab: {fileID: 6188326247936717760, guid: 88ad09b735ab4c2478ce874dd259c398, type: 3}
+  _pauseWindowPrefab: {fileID: 9155140914092240688, guid: 27b59389a4cfebb41b7e5d4e1f33ba1e, type: 3}
   _gameSettings: {fileID: 11400000, guid: ee4d3a8746472624fa56e081a3f6edfa, type: 2}
   _effectsSettings: {fileID: 11400000, guid: 0982d75bd8e18184682df384d28cb4da, type: 2}
   _recognitionSettings: {fileID: 11400000, guid: c15817ad16fb54d4bb10e537cc94047d, type: 2}

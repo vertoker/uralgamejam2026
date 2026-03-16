@@ -12,8 +12,9 @@ using World;
 public class GameScope : LifetimeScope
 {
     [SerializeField] private Player _player;
-    [SerializeField] private GameWindow _gameWindowPrefab;
     [SerializeField] private InputActionAsset _inputActionAsset;
+    [SerializeField] private GameWindow _gameWindowPrefab;
+    [SerializeField] private PauseWindow _pauseWindowPrefab;
     
     [SerializeField] private GameSettings _gameSettings;
     [SerializeField] private EffectsSettings _effectsSettings;
@@ -23,9 +24,12 @@ public class GameScope : LifetimeScope
     protected override void Configure(IContainerBuilder builder)
     {
         var gameWindow = Instantiate(_gameWindowPrefab);
+        var pauseWindow = Instantiate(_pauseWindowPrefab);
+        pauseWindow.gameObject.SetActive(false);
         
-        builder.RegisterInstance(_player); // спаунить не надо
         builder.RegisterInstance(gameWindow);
+        builder.RegisterInstance(pauseWindow);
+        builder.RegisterInstance(_player);
         builder.RegisterInstance(_inputActionAsset);
         
         builder.RegisterInstance(_gameSettings);
