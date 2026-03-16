@@ -14,10 +14,16 @@ namespace Services
         private readonly SpellsSettings _settings;
         private readonly SymbolService _symbolService;
         private readonly RunesProvider _runesProvider;
-        private readonly SpellCounter _spellCounter;
+        private readonly SpellBuilder _spellBuilder;
 
         private CancellationTokenSource _tokenSource = new();
         private readonly CompositeDisposable _disposables = new();
+        
+        private readonly Subject<SpellBuilder> _onCancel = new();
+        private readonly Subject<SpellBuilder> _onCast = new();
+        
+        public IObservable<SpellBuilder> OnCancel => _onCancel;
+        public IObservable<SpellBuilder> OnCast => _onCast;
         
         public SpellService(SpellsSettings settings, SymbolService symbolService, RunesProvider runesProvider)
         {
@@ -27,7 +33,7 @@ namespace Services
 
             var spellContainer = new SpellContainer();
             spellContainer.Initialize(settings);
-            _spellCounter = new SpellCounter(spellContainer);
+            _spellBuilder = new SpellBuilder(spellContainer);
         }
         public void Initialize()
         {
@@ -58,9 +64,9 @@ namespace Services
                       $"symbol: {BgnClrGrn}{step.Symbol.name}{EndClr}, " +
                       $"runes: ({BgnClrGrn}{step.RuneGroup}{EndClr})");
             
-            if (_spellCounter.Active)
-                _spellCounter.Next(step);
-            else _spellCounter.Start(step);
+            if (_spellBuilder.Active)
+                _spellBuilder.Next(step);
+            else _spellBuilder.Start(step);
             
             StartCast();
         }
@@ -87,19 +93,21 @@ namespace Services
             await UniTask.WaitForSeconds(_settings.ActivateTime);
             if (token.IsCancellationRequested) return;
             
-            Debug.Log($"{BgnClrYlw}Cancel{EndClr}, steps count: {_spellCounter.Steps.Count}");
+            Debug.Log($"{BgnClrYlw}Cancel{EndClr}, steps count: {_spellBuilder.Steps.Count}");
             
-            _spellCounter.Stop();
+            _onCancel.OnNext(_spellBuilder);
+            
+            _spellBuilder.Stop();
         }
         private async UniTask CastAsync(CancellationToken token)
         {
             await UniTask.WaitForSeconds(_settings.ActivateTime);
             if (token.IsCancellationRequested) return;
             
-            var spell = _spellCounter.GetSpell();
-            LogSpell(spell);
+            LogSpell(_spellBuilder.GetSpell());
+            _onCast.OnNext(_spellBuilder);
 
-            _spellCounter.Stop();
+            _spellBuilder.Stop();
         }
 
         private static void LogSpell(SpellScriptable spell)

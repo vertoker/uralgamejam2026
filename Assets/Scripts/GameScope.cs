@@ -38,12 +38,14 @@ public class GameScope : LifetimeScope
         // Rendering
         builder.Register<ZernikeRecognizer>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
         builder.Register<LineDrawerService>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
+        builder.Register<VFXDrawerService>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
         
         // Gameplay
         builder.Register<RunesProvider>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
         builder.Register<RuneColorMixer>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
         builder.Register<SymbolService>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
         builder.Register<SpellService>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
+        builder.Register<CastService>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
         
         builder.Register<GameEntryPoint>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
         

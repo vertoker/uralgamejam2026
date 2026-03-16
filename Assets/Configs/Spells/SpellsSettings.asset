@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639972b001074cada82c84b0a7d46da0, type: 3}
   m_Name: SpellsSettings
   m_EditorClassIdentifier: Assembly-CSharp::Spells.SpellsSettings
-  <ActivateTimeIfHasChoice>k__BackingField: 1
+  <ActivateTime>k__BackingField: 0.75
   _spells:
   - {fileID: 11400000, guid: 29e0e9de175d2c94796cb4fa8ceaf93b, type: 2}
   - {fileID: 11400000, guid: c7a8668e56ce703408d3ec36d5ae97c2, type: 2}

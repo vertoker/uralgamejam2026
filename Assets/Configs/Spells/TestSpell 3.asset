@@ -15,4 +15,6 @@ MonoBehaviour:
   _steps:
   - <Symbol>k__BackingField: {fileID: 11400000, guid: ed53bc2ac88c6714a81864f3646048a8, type: 2}
     <RuneGroup>k__BackingField: 0
-  <PrefabEffect>k__BackingField: {fileID: 0}
+  <PrefabEffect>k__BackingField: {fileID: 4576288443916271827, guid: 39dab1d024537a34db448434fad519cb, type: 3}
+  <EffectLifetime>k__BackingField: 3
+  <SpawnEffectDistance>k__BackingField: 3

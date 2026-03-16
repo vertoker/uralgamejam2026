@@ -12,12 +12,14 @@ namespace Services
     public class SymbolService : IInitializable, IDisposable
     {
         private readonly Camera _camera;
+        private readonly EffectsSettings _settings;
         private readonly InputProvider _inputProvider;
         private readonly RunesProvider _runesProvider;
         private readonly RuneColorMixer _colorMixer;
         private readonly ZernikeRecognizer _zernikeRecognizer;
         private readonly LineDrawerService _lineDrawerService;
-        
+        private readonly VFXDrawerService _vfxDrawerService;
+
         private readonly CompositeDisposable _disposables = new();
         
         private readonly Subject<Unit> _onStartDraw = new();
@@ -26,16 +28,18 @@ namespace Services
         public IObservable<Unit> OnStartDraw => _onStartDraw;
         public IObservable<SymbolFeaturesScriptable> OnDraw => _onDraw;
 
-        public SymbolService(Camera camera, InputProvider inputProvider, 
-            RunesProvider runesProvider, RuneColorMixer colorMixer,
-            ZernikeRecognizer zernikeRecognizer, LineDrawerService lineDrawerService)
+        public SymbolService(Camera camera, EffectsSettings settings, InputProvider inputProvider, 
+            ZernikeRecognizer zernikeRecognizer, RunesProvider runesProvider, RuneColorMixer colorMixer,
+            LineDrawerService lineDrawerService, VFXDrawerService vfxDrawerService)
         {
             _camera = camera;
+            _settings = settings;
             _inputProvider = inputProvider;
             _runesProvider = runesProvider;
             _colorMixer = colorMixer;
             _zernikeRecognizer = zernikeRecognizer;
             _lineDrawerService = lineDrawerService;
+            _vfxDrawerService = vfxDrawerService;
         }
 
         public void Initialize()
@@ -50,19 +54,23 @@ namespace Services
         
         private readonly List<Vector2> _pointsCache = new(512);
         private LineDrawer _testLineDrawer;
+        private DrawEffectPointVFX _templateComponent;
         
         private void OnCursorActive(bool active)
         {
             if (active)
             {
+                // Start
                 _pointsCache.Clear();
                 var color = _colorMixer.GetColor(_runesProvider.RuneGroup.Value);
-                _testLineDrawer = _lineDrawerService.Create(color);
+                if (_settings.UseLine) _testLineDrawer = _lineDrawerService.Create(color);
+                if (_settings.UseVFX) _templateComponent = new DrawEffectPointVFX(Vector3.zero, color);
                 _onStartDraw.OnNext(Unit.Default);
             }
             else
             {
-                _lineDrawerService.Return(_testLineDrawer, 3f);
+                // End
+                if (_settings.UseLine) _lineDrawerService.Return(_testLineDrawer, 3f);
                 
                 if (_pointsCache.Count != 0)
                 {
@@ -81,7 +89,17 @@ namespace Services
                 _pointsCache.Add(position);
                 var ray = _camera.ScreenPointToRay(position);
                 var point = ray.GetPoint(3f);
-                _testLineDrawer.AddPosition(point);
+
+                if (_settings.UseLine)
+                {
+                    _testLineDrawer.AddPosition(point);
+                }
+                if (_settings.UseVFX)
+                {
+                    var component = _templateComponent;
+                    component.Position = point;
+                    _vfxDrawerService.AddRequest(component);
+                }
             }
         }
     }

@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 
 namespace Spells
 {
-    public class SpellCounter
+    public class SpellBuilder
     {
         private readonly SpellContainer _container;
         private readonly List<SpellStep> _steps = new();
@@ -15,7 +16,7 @@ namespace Spells
         
         public bool Active => _treeNode != null;
 
-        public SpellCounter(SpellContainer container)
+        public SpellBuilder(SpellContainer container)
         {
             _container = container;
         }
@@ -33,7 +34,7 @@ namespace Spells
             _treeNode = null;
         }
         
-        public SpellScriptable GetSpell() => _treeNode?.Spell;
+        [CanBeNull] public SpellScriptable GetSpell() => _treeNode?.Spell;
         public bool Next(SpellStep step)
         {
             var result = _treeNode.NextSteps.TryGetValue(step, out _treeNode);

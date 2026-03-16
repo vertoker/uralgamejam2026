@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Recognition.RecognitionSettings
   <RecognitionThreshold>k__BackingField: 0.92
   <ZernikeWeight>k__BackingField: 0.7
-  <SampleRateSeconds>k__BackingField: 0.05
   <ZernikeOrder>k__BackingField: 4
   <AngularCount>k__BackingField: 12
   <ResamplePoints>k__BackingField: 64
@@ -23,3 +22,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6209e4026e0d4924e8a7bf3ddf95b719, type: 2}
   - {fileID: 11400000, guid: 48645e1422c8a6c49b9639d72abd387d, type: 2}
   - {fileID: 11400000, guid: ed53bc2ac88c6714a81864f3646048a8, type: 2}
+  - {fileID: 11400000, guid: 3005d9f422159cf449651a7e50b07e86, type: 2}
