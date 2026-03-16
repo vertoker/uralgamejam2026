@@ -5,28 +5,26 @@ using VContainer;
 
 namespace UI
 {
-    public class TipToggle : MonoBehaviour
+    public class GameModeToggle : MonoBehaviour
     {
+        [field: SerializeField] public bool ActiveOnMagicMode { get; private set; } = true;
         [field: SerializeField] public GameObject TipGO { get; private set; }
         
         private readonly CompositeDisposable _disposables = new();
 
         [Inject]
-        private void Construct(InputProvider inputProvider)
+        private void Construct(GameModesService gameModesService)
         {
-            inputProvider.Tip.Subscribe(OnTipChanged).AddTo(_disposables);
-        }
-        private void OnEnable()
-        {
-            TipGO.SetActive(false);
+            gameModesService.IsMagicMode.Subscribe(OnMagicModeChanged).AddTo(_disposables);
         }
         private void OnDestroy()
         {
             _disposables.Clear();
         }
         
-        private void OnTipChanged(bool value)
+        private void OnMagicModeChanged(bool value)
         {
+            value = ActiveOnMagicMode ? value : !value;
             TipGO.SetActive(value);
         }
     }

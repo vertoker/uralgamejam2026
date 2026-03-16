@@ -18,18 +18,14 @@ namespace UI
         [field: SerializeField] public TMP_Text Text { get; private set; }
         [field: SerializeField] public TMP_Text TipText { get; private set; }
         
-        [Inject] private RunesProvider _runesProvider;
         private readonly CompositeDisposable _disposables = new();
+        private GameModesService _gameModesService;
 
         [Inject]
-        private void Construct(RunesProvider runesProvider)
+        private void Construct(RunesProvider runesProvider, GameModesService gameModesService)
         {
-            _runesProvider = runesProvider;
-            _runesProvider.RuneGroup.Subscribe(OnGroupUpdated).AddTo(_disposables);
-        }
-        private void OnEnable()
-        {
-            SetActive(false);
+            _gameModesService = gameModesService;
+            runesProvider.RuneGroup.Subscribe(OnGroupUpdated).AddTo(_disposables);
         }
         private void OnDestroy()
         {
@@ -43,6 +39,8 @@ namespace UI
         }
         public void SetActive(bool value)
         {
+            value = _gameModesService.IsMagicMode.Value && value;
+            
             ImageOn.gameObject.SetActive(value);
             ImageOff.gameObject.SetActive(!value);
         }

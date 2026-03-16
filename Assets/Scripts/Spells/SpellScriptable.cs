@@ -13,6 +13,5 @@ namespace Spells
         
         [field: SerializeField] public GameObject PrefabEffect { get; private set; }
         [field: SerializeField] public float EffectLifetime { get; private set; } = 3f;
-        [field: SerializeField] public float SpawnEffectDistance { get; private set; } = 3f;
     }
 }

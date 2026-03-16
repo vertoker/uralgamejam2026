@@ -1,6 +1,5 @@
 using Effects;
 using Recognition;
-using Runes;
 using Services;
 using Spells;
 using UI;
@@ -8,13 +7,15 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using VContainer;
 using VContainer.Unity;
+using World;
 
 public class GameScope : LifetimeScope
 {
-    [SerializeField] private Camera _camera;
+    [SerializeField] private Player _player;
     [SerializeField] private GameWindow _gameWindowPrefab;
     [SerializeField] private InputActionAsset _inputActionAsset;
     
+    [SerializeField] private GameSettings _gameSettings;
     [SerializeField] private EffectsSettings _effectsSettings;
     [SerializeField] private RecognitionSettings _recognitionSettings;
     [SerializeField] private SpellsSettings _spellsSettings;
@@ -23,10 +24,11 @@ public class GameScope : LifetimeScope
     {
         var gameWindow = Instantiate(_gameWindowPrefab);
         
-        builder.RegisterInstance(_camera);
+        builder.RegisterInstance(_player); // спаунить не надо
         builder.RegisterInstance(gameWindow);
         builder.RegisterInstance(_inputActionAsset);
         
+        builder.RegisterInstance(_gameSettings);
         builder.RegisterInstance(_effectsSettings);
         builder.RegisterInstance(_recognitionSettings);
         builder.RegisterInstance(_spellsSettings);
@@ -36,17 +38,22 @@ public class GameScope : LifetimeScope
         builder.Register<InputProvider>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
         
         // Rendering
-        builder.Register<ZernikeRecognizer>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
         builder.Register<LineDrawerService>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
         builder.Register<VFXDrawerService>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
         
-        // Gameplay
+        // Core Game
+        builder.Register<PlayerService>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
+        builder.Register<GameModesService>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
+        builder.Register<GameUIService>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
+        
+        // Magic Systems
+        builder.Register<ZernikeRecognizer>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
         builder.Register<RunesProvider>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
-        builder.Register<RuneColorMixer>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
         builder.Register<SymbolService>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
         builder.Register<SpellService>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
         builder.Register<CastService>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
         
+        // Entry
         builder.Register<GameEntryPoint>(Lifetime.Singleton).AsSelf().AsImplementedInterfaces();
         
         Debug.Log($"{nameof(GameScope)} is configured");
