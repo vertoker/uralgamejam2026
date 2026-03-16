@@ -19,7 +19,8 @@ MonoBehaviour:
   <ResamplePoints>k__BackingField: 64
   <CreateAssetOnRecognition>k__BackingField: 0
   <Templates>k__BackingField:
-  - {fileID: 11400000, guid: 6209e4026e0d4924e8a7bf3ddf95b719, type: 2}
-  - {fileID: 11400000, guid: 48645e1422c8a6c49b9639d72abd387d, type: 2}
-  - {fileID: 11400000, guid: ed53bc2ac88c6714a81864f3646048a8, type: 2}
-  - {fileID: 11400000, guid: 3005d9f422159cf449651a7e50b07e86, type: 2}
+  - {fileID: 11400000, guid: 0ea95c152f5070148a1251690e49f978, type: 2}
+  - {fileID: 11400000, guid: 2d145d440c145974b98eea32b2e6ae14, type: 2}
+  - {fileID: 11400000, guid: 5f2a2f93150adad4db6cc8df9f5f9272, type: 2}
+  - {fileID: 11400000, guid: 53f2c875ff4df054d805de83334da2ca, type: 2}
+  - {fileID: 11400000, guid: ff1f9a07e9735e54d84a1cb338e73a8b, type: 2}

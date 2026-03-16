@@ -37,19 +37,24 @@ namespace Services
         private void OnCancel(bool value)
         {
             if (!value) return;
-            _isPlay = !_isPlay;
+            SetPlay(!_isPlay);
+        }
+
+        public void SetPlay(bool isPlay)
+        {
+            _isPlay = isPlay;
 
             if (_isPlay)
             {
                 _pauseWindow.gameObject.SetActive(false);
                 Time.timeScale = 1f;
-                _cursorService.SetNone();
+                _gameModesService.ForceUpdateMagicMode();
             }
             else
             {
                 _pauseWindow.gameObject.SetActive(true);
                 Time.timeScale = 0f;
-                _gameModesService.ForceUpdateMagicMode();
+                _cursorService.SetNone();
             }
         }
     }

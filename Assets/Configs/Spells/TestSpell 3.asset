@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: TestSpell 3
   m_EditorClassIdentifier: Assembly-CSharp::Spells.SpellScriptable
   _steps:
-  - <Symbol>k__BackingField: {fileID: 11400000, guid: ed53bc2ac88c6714a81864f3646048a8, type: 2}
+  - <Symbol>k__BackingField: {fileID: 11400000, guid: 2d145d440c145974b98eea32b2e6ae14, type: 2}
     <RuneGroup>k__BackingField: 0
   <PrefabEffect>k__BackingField: {fileID: 4576288443916271827, guid: 39dab1d024537a34db448434fad519cb, type: 3}
   <EffectLifetime>k__BackingField: 3
-  <SpawnEffectDistance>k__BackingField: 3

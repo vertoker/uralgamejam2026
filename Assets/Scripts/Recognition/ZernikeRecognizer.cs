@@ -19,7 +19,7 @@ namespace Recognition
             Debug.Log($"<b>Recognizing {points.Count} points</b>");
             
             var newPoints = new List<Vector2>(points);
-            newPoints = NormalizePoints(newPoints);
+            newPoints = NormalizePoints(newPoints, _settings.ResamplePoints);
             
             var zernikeMoments = CalculateZernikeMoments(newPoints, _settings.ZernikeOrder);
             var angularHistogram = CalculateAngularHistogram(newPoints, _settings.AngularCount);
@@ -29,7 +29,10 @@ namespace Recognition
             
 #if UNITY_EDITOR
             if (_settings.CreateAssetOnRecognition)
-                SymbolFeaturesScriptable.CreateScriptableAndSave($"Assets/Features_{Random.Range(1000, 10000)}.asset", features);
+            {
+                var path = $"Assets/Symbol_{Random.Range(1000, 10000)}.asset";
+                SymbolFeaturesScriptable.CreateScriptableAndSave(path, points, features);
+            }
 #endif
             
             // TODO сделать поиск через JobSystem если будет подвисать
@@ -56,7 +59,7 @@ namespace Recognition
 
             if (bestSimilarity >= _settings.RecognitionThreshold)
             {
-                LogFeatures(bestMatch.Data);
+                ZernikeStatic.LogFeatures(bestMatch.Data);
                 Debug.Log($"<color=green>Recognized</color>: <color=green>{bestMatch.name}</color> (similarity: <b>{bestSimilarity:F4}</b>)");
                 return bestMatch;
             }
@@ -86,11 +89,11 @@ namespace Recognition
             return normalized;
         }
 
-        private List<Vector2> NormalizePoints(List<Vector2> points)
+        private static List<Vector2> NormalizePoints(List<Vector2> points, int targetCount)
         {
-            points = RemoveDuplicates(points);
+            points = ZernikeStatic.RemoveDuplicates(points);
             
-            var center = ComputeCentroid(points);
+            var center = ZernikeStatic.ComputeCentroid(points);
             var maxRadius = 0f;
             
             // Центрируем и находим максимальное расстояние
@@ -109,7 +112,7 @@ namespace Recognition
             }
             
             // Ресемплинг для равномерного распределения
-            points = ResamplePoints(points, _settings.ResamplePoints);
+            points = ZernikeStatic.ResamplePoints(points, targetCount);
             
             return points;
         }
@@ -169,8 +172,10 @@ namespace Recognition
                 if (n - 2 * s >= 0)
                 {
                     var sign = (s % 2 == 0) ? 1f : -1f;
-                    var numerator = Factorial(n - s);
-                    var denominator = Factorial(s) * Factorial(k - s) * Factorial((n - m) / 2 - s);
+                    var numerator = ZernikeStatic.Factorial(n - s);
+                    var denominator = ZernikeStatic.Factorial(s) 
+                                      * ZernikeStatic.Factorial(k - s) 
+                                      * ZernikeStatic.Factorial((n - m) / 2 - s);
                     
                     if (denominator != 0)
                     {
@@ -244,94 +249,6 @@ namespace Recognition
             }
 
             return zernikeSimilarity;
-        }
-
-        // ////////////////////////////////////////////////////////////////////////////////////
-        // Вспомогательные методы
-        // ////////////////////////////////////////////////////////////////////////////////////
-
-        private List<Vector2> RemoveDuplicates(List<Vector2> points)
-        {
-            if (points.Count <= 1) return points;
-            
-            var result = new List<Vector2> { points[0] };
-            const float minDist = 0.01f;
-
-            for (var i = 1; i < points.Count; i++)
-            {
-                if (Vector2.Distance(points[i], result.Last()) > minDist)
-                    result.Add(points[i]);
-            }
-            
-            return result;
-        }
-
-        private Vector2 ComputeCentroid(List<Vector2> points)
-        {
-            if (points.Count == 0) return Vector2.zero;
-            
-            var sum = Vector2.zero;
-            foreach (var point in points)
-                sum += point;
-            return sum / points.Count;
-        }
-
-        private List<Vector2> ResamplePoints(List<Vector2> points, int targetCount)
-        {
-            if (points.Count <= 1 || targetCount <= 1) return points;
-            
-            var result = new List<Vector2>();
-            var totalLength = 0f;
-            
-            for (var i = 1; i < points.Count; i++)
-                totalLength += Vector2.Distance(points[i - 1], points[i]);
-            
-            if (totalLength < 0.0001f) return points;
-            
-            var segmentLength = totalLength / (targetCount - 1);
-            var currentDist = 0f;
-            
-            result.Add(points[0]);
-            
-            for (var i = 1; i < points.Count && result.Count < targetCount; i++)
-            {
-                var dist = Vector2.Distance(points[i - 1], points[i]);
-                
-                while (currentDist + dist >= segmentLength && result.Count < targetCount)
-                {
-                    var t = (segmentLength - currentDist) / dist;
-                    var newPoint = Vector2.Lerp(points[i - 1], points[i], t);
-                    result.Add(newPoint);
-                    
-                    dist -= (segmentLength - currentDist);
-                    currentDist = 0f;
-                }
-                
-                currentDist += dist;
-            }
-            
-            // Добиваем последнюю точку
-            while (result.Count < targetCount)
-                result.Add(points.Last());
-            
-            return result;
-        }
-
-        private static float Factorial(int n)
-        {
-            if (n <= 1) return 1f;
-            
-            var result = 1f;
-            for (var i = 2; i <= n; i++)
-                result *= i;
-            return result;
-        }
-
-        private static void LogFeatures(SymbolFeatures features)
-        {
-            var zernikeString = string.Join(" ", features.ZernikeMoments.Select(f => f.ToString("F3")));
-            var angularString = string.Join(" ", features.AngularHistogram.Select(f => f.ToString("F3")));
-            Debug.Log($"Zernike moments: [{zernikeString}], Angular histogram: [{angularString}]");
         }
     }
 }

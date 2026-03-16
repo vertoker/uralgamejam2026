@@ -909,6 +909,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdc2279e7e55486cb8f2a01f43d224f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UI.PauseWindow
+  <ContinueButton>k__BackingField: {fileID: 3202165606563192483}
+  <ExitToMenuButton>k__BackingField: {fileID: 7714669644848331552}
 --- !u!1 &7345025352566349409
 GameObject:
   m_ObjectHideFlags: 0
